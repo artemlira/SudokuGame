@@ -1,0 +1,24 @@
+[
+   {
+      "level": "first",
+      "backgroundImage": "../images/img1.jpg",
+      "images": "images/1.jpg",
+      "icons": [
+         "images/stickers/stic1.jpg",
+         "images/stickers/stic2.jpg",
+         "images/stickers/stic3.jpg",
+         "images/stickers/stic4.jpg"
+      ]
+   },
+   {
+      "level": "second",
+      "backgroundImage": "../images/img2.jpg",
+      "images": "images/2.jpg",
+      "icons": [
+         "images/stickers/stic5.jpg",
+         "images/stickers/stic6.jpg",
+         "images/stickers/stic7.jpg",
+         "images/stickers/stic8.jpg"
+      ]
+   }
+]
