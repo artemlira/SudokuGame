@@ -9,7 +9,6 @@ class Sudoku {
       this.gamesData = null;
    }
 
-
    getConditionsGame() {
       fetch('../game.json')
          .then((response) => {
@@ -26,6 +25,7 @@ class Sudoku {
                   this.randomStart(item.icons);
                }
             })
+            this.gameLogic();
          })
          .catch((error) => console.error(error));
    }
@@ -65,7 +65,8 @@ class Sudoku {
          let card = event.dataTransfer.getData('img');
          this.innerHTML = card;
          this.classList.add('active');
-         console.dir(this);
+         // console.dir(this);
+         // this.gameLogic();
       }
    }
 
@@ -73,12 +74,28 @@ class Sudoku {
       this.gameField.forEach((cell) => {
          cell.addEventListener('dragover', this.dragOver);
          cell.addEventListener('drop', this.dragDrop);
+         cell.addEventListener('drop', this.gameLogic.bind(this));
       });
-
    }
 
-   game() {
-      console.dir(this.gamesData);
+   gameLogic() {
+      let count = 0;
+      this.gameField.forEach((item) => {
+         if (item.matches('.active')) {
+            count++;
+         }
+      });
+      if (this.gameField.length == count) {
+         this.checkForWinn();
+      }
+   }
+
+   checkForWinn() {
+      if (this.gameImages[0].getAttribute('src') == this.gameImages[1].getAttribute('src')) {
+         console.log(this.gameImages[0].getAttribute('src'));
+         console.log(this.gameImages[1].getAttribute('src'));
+         alert('Игра закончилась')
+      }
    }
 
    init() {
@@ -86,6 +103,7 @@ class Sudoku {
       this.getConditionsGame();
       this.dragStart();
       this.gameDrags();
+
    }
 }
 
