@@ -6,6 +6,7 @@ class Sudoku {
       this.gameField = this.wrapper.querySelectorAll(gameField);
       this.gameImages = this.wrapper.querySelectorAll(gameImages);
       this.iconImages = this.wrapper.querySelectorAll(iconImages);
+      this.gamesData = null;
    }
 
 
@@ -18,9 +19,11 @@ class Sudoku {
             return response.json();
          })
          .then((data) => {
+            this.gamesData = data;
             data.forEach(item => {
                if (item.level == 'first') {
                   this.createStyle(item.images, item.backgroundImage, item.icons);
+                  this.randomStart(item.icons);
                }
             })
          })
@@ -37,6 +40,14 @@ class Sudoku {
       this.wrapper.style.backgroundImage = `url(${bgi})`;
    }
 
+   randomStart(icon) {
+      for (let i = 0; i < this.iconImages.length; i++) {
+         let randomNumber = Math.floor(Math.random() * (16 - 0)) + 0;
+         this.gameImages[randomNumber].setAttribute('src', icon[i]);
+         this.gameImages[randomNumber].closest('.game__cell').classList.add('active');
+      }
+   }
+
    dragStart() {
       this.wrapper.addEventListener('dragstart', (event) => {
          if (event.target.matches('img')) {
@@ -49,34 +60,32 @@ class Sudoku {
       event.preventDefault();
    }
 
-   dragEnter() {
-      this.classList.add('hovered');
-   }
-
-   dragLeave() {
-      this.classList.remove('hovered');
-   }
-
    dragDrop(event) {
-      let card = event.dataTransfer.getData('img');
-      this.innerHTML = card;
-      this.classList.remove('hovered');
+      if (!this.matches('.active')) {
+         let card = event.dataTransfer.getData('img');
+         this.innerHTML = card;
+         this.classList.add('active');
+         console.dir(this);
+      }
    }
 
-   toRightDrags() {
+   gameDrags() {
       this.gameField.forEach((cell) => {
          cell.addEventListener('dragover', this.dragOver);
-         cell.addEventListener('dragenter', this.dragEnter);
-         cell.addEventListener('dragleave', this.dragLeave);
          cell.addEventListener('drop', this.dragDrop);
       });
+
+   }
+
+   game() {
+      console.dir(this.gamesData);
    }
 
    init() {
       console.dir(this);
       this.getConditionsGame();
       this.dragStart();
-      this.toRightDrags();
+      this.gameDrags();
    }
 }
 
