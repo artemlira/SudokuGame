@@ -4,10 +4,10 @@
       "backgroundImage": "../images/img1.jpg",
       "images": "images/1.jpg",
       "icons": [
-         "images/stickers/stic1.jpg",
-         "images/stickers/stic2.jpg",
-         "images/stickers/stic3.jpg",
-         "images/stickers/stic4.jpg"
+         "images/stickers/1.jpg",
+         "images/stickers/2.jpg",
+         "images/stickers/3.jpg",
+         "images/stickers/4.jpg"
       ]
    },
    {
@@ -15,10 +15,10 @@
       "backgroundImage": "../images/img2.jpg",
       "images": "images/2.jpg",
       "icons": [
-         "images/stickers/stic5.jpg",
-         "images/stickers/stic6.jpg",
-         "images/stickers/stic7.jpg",
-         "images/stickers/stic8.jpg"
+         "images/stickers/5.jpg",
+         "images/stickers/6.jpg",
+         "images/stickers/7.jpg",
+         "images/stickers/8.jpg"
       ]
    }
 ]

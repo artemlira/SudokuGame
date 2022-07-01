@@ -22,21 +22,24 @@ class Sudoku {
             data.forEach(item => {
                if (item.level == 'first') {
                   this.createStyle(item.images, item.backgroundImage, item.icons);
-                  this.randomStart(item.icons);
+                  // this.randomStart(item.icons);
                }
             })
-            this.gameLogic();
          })
          .catch((error) => console.error(error));
    }
 
    createStyle(img, bgi, icon) {
       this.gameImages.forEach((item) => {
-         item.setAttribute('src', img);
+         item.removeAttribute('src')
       });
-      this.iconImages.forEach((item, index) => {
-         item.setAttribute('src', icon[index]);
-      });
+      this.gameField.forEach((item) => item.classList.remove('active'));
+      setTimeout((this.gameImages.forEach((item) => item.setAttribute('src', img))), 0);
+      // this.gameImages.forEach((item) => {
+      //    item.removeAttribute('src')
+      //    // item.setAttribute('src', img)
+      // });
+      this.iconImages.forEach((item, index) => item.setAttribute('src', icon[index]));
       this.wrapper.style.backgroundImage = `url(${bgi})`;
    }
 
@@ -65,8 +68,8 @@ class Sudoku {
          let card = event.dataTransfer.getData('img');
          this.innerHTML = card;
          this.classList.add('active');
-         // console.dir(this);
-         // this.gameLogic();
+         this.firstElementChild.classList.add('game__cell__img');
+         this.firstElementChild.classList.remove('icon__img');
       }
    }
 
@@ -91,10 +94,53 @@ class Sudoku {
    }
 
    checkForWinn() {
-      if (this.gameImages[0].getAttribute('src') == this.gameImages[1].getAttribute('src')) {
-         console.log(this.gameImages[0].getAttribute('src'));
-         console.log(this.gameImages[1].getAttribute('src'));
-         alert('Игра закончилась')
+      if (
+         ((this.gameField[0].innerHTML != this.gameField[1].innerHTML && this.gameField[0].innerHTML != this.gameField[2].innerHTML && this.gameField[0].innerHTML != this.gameField[3].innerHTML)
+            && (this.gameField[1].innerHTML != this.gameField[2].innerHTML && this.gameField[1].innerHTML != this.gameField[3].innerHTML)
+            && (this.gameField[2].innerHTML != this.gameField[3].innerHTML))
+         &&
+         ((this.gameField[4].innerHTML != this.gameField[5].innerHTML && this.gameField[4].innerHTML != this.gameField[6].innerHTML && this.gameField[4].innerHTML != this.gameField[7].innerHTML)
+            && (this.gameField[5].innerHTML != this.gameField[6].innerHTML && this.gameField[5].innerHTML != this.gameField[7].innerHTML)
+            && (this.gameField[6].innerHTML != this.gameField[7].innerHTML))
+         &&
+         ((this.gameField[8].innerHTML != this.gameField[9].innerHTML && this.gameField[8].innerHTML != this.gameField[10].innerHTML && this.gameField[8].innerHTML != this.gameField[11].innerHTML)
+            && (this.gameField[9].innerHTML != this.gameField[10].innerHTML && this.gameField[9].innerHTML != this.gameField[11].innerHTML)
+            && (this.gameField[10].innerHTML != this.gameField[11].innerHTML))
+         &&
+         ((this.gameField[12].innerHTML != this.gameField[13].innerHTML && this.gameField[12].innerHTML != this.gameField[14].innerHTML && this.gameField[12].innerHTML != this.gameField[15].innerHTML)
+            && (this.gameField[13].innerHTML != this.gameField[14].innerHTML && this.gameField[13].innerHTML != this.gameField[15].innerHTML)
+            && (this.gameField[14].innerHTML != this.gameField[15].innerHTML))
+         &&
+         ((this.gameField[0].innerHTML != this.gameField[4].innerHTML && this.gameField[0].innerHTML != this.gameField[8].innerHTML && this.gameField[0].innerHTML != this.gameField[12].innerHTML)
+            && (this.gameField[4].innerHTML != this.gameField[8].innerHTML && this.gameField[4].innerHTML != this.gameField[12].innerHTML)
+            && (this.gameField[8].innerHTML != this.gameField[12].innerHTML))
+         &&
+         ((this.gameField[1].innerHTML != this.gameField[5].innerHTML && this.gameField[1].innerHTML != this.gameField[9].innerHTML && this.gameField[1].innerHTML != this.gameField[13].innerHTML)
+            && (this.gameField[5].innerHTML != this.gameField[9].innerHTML && this.gameField[5].innerHTML != this.gameField[13].innerHTML)
+            && (this.gameField[9].innerHTML != this.gameField[13].innerHTML))
+         &&
+         ((this.gameField[2].innerHTML != this.gameField[6].innerHTML && this.gameField[2].innerHTML != this.gameField[10].innerHTML && this.gameField[2].innerHTML != this.gameField[14].innerHTML)
+            && (this.gameField[6].innerHTML != this.gameField[10].innerHTML && this.gameField[6].innerHTML != this.gameField[14].innerHTML)
+            && (this.gameField[10].innerHTML != this.gameField[14].innerHTML))
+         &&
+         ((this.gameField[3].innerHTML != this.gameField[7].innerHTML && this.gameField[3].innerHTML != this.gameField[11].innerHTML && this.gameField[3].innerHTML != this.gameField[15].innerHTML)
+            && (this.gameField[7].innerHTML != this.gameField[11].innerHTML && this.gameField[7].innerHTML != this.gameField[15].innerHTML)
+            && (this.gameField[11].innerHTML != this.gameField[15].innerHTML))
+      ) {
+         alert('Поздравляю!!! Ты выиграл');
+         let choise = confirm('Хочешь перейти на слеующий уровень?');
+         if (choise) {
+            this.gamesData.forEach(item => {
+               if (item.level == 'second') {
+                  this.createStyle(item.images, item.backgroundImage, item.icons);
+                  // this.randomStart(item.icons);
+               }
+            })
+         } else {
+            alert('Игра закончена!');
+         }
+      } else {
+         alert('Ты проиграл')
       }
    }
 
