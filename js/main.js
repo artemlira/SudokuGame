@@ -22,7 +22,7 @@ class Sudoku {
             data.forEach(item => {
                if (item.level == 'first') {
                   this.createStyle(item.images, item.backgroundImage, item.icons);
-                  // this.randomStart(item.icons);
+                  this.randomStart(item.icons);
                }
             })
          })
@@ -30,16 +30,14 @@ class Sudoku {
    }
 
    createStyle(img, bgi, icon) {
-      this.gameImages.forEach((item) => {
-         item.removeAttribute('src')
-      });
       this.gameField.forEach((item) => item.classList.remove('active'));
-      setTimeout((this.gameImages.forEach((item) => item.setAttribute('src', img))), 0);
-      // this.gameImages.forEach((item) => {
-      //    item.removeAttribute('src')
-      //    // item.setAttribute('src', img)
-      // });
-      this.iconImages.forEach((item, index) => item.setAttribute('src', icon[index]));
+      this.gameImages.forEach((item) => item.setAttribute('src', img));
+      this.gameField.forEach((item) => item.innerHTML = this.gameImages[0].outerHTML);
+      this.iconImages.forEach((item, index) => {
+         item.setAttribute('src', icon[index]);
+         item.setAttribute('data_value', index + 1);
+      });
+
       this.wrapper.style.backgroundImage = `url(${bgi})`;
    }
 
@@ -47,7 +45,9 @@ class Sudoku {
       for (let i = 0; i < this.iconImages.length; i++) {
          let randomNumber = Math.floor(Math.random() * (16 - 0)) + 0;
          this.gameImages[randomNumber].setAttribute('src', icon[i]);
-         this.gameImages[randomNumber].closest('.game__cell').classList.add('active');
+         this.gameImages[randomNumber].setAttribute('data_value', i + 1);
+         this.gameField[randomNumber].innerHTML = this.gameImages[randomNumber].outerHTML;
+         this.gameField[randomNumber].classList.add('active');
       }
    }
 
@@ -95,37 +95,21 @@ class Sudoku {
 
    checkForWinn() {
       if (
-         ((this.gameField[0].innerHTML != this.gameField[1].innerHTML && this.gameField[0].innerHTML != this.gameField[2].innerHTML && this.gameField[0].innerHTML != this.gameField[3].innerHTML)
-            && (this.gameField[1].innerHTML != this.gameField[2].innerHTML && this.gameField[1].innerHTML != this.gameField[3].innerHTML)
-            && (this.gameField[2].innerHTML != this.gameField[3].innerHTML))
+         (+this.gameField[0].children[0].getAttribute('data_value') + +this.gameField[1].children[0].getAttribute('data_value') + +this.gameField[2].children[0].getAttribute('data_value') + +this.gameField[3].children[0].getAttribute('data_value') == 10)
          &&
-         ((this.gameField[4].innerHTML != this.gameField[5].innerHTML && this.gameField[4].innerHTML != this.gameField[6].innerHTML && this.gameField[4].innerHTML != this.gameField[7].innerHTML)
-            && (this.gameField[5].innerHTML != this.gameField[6].innerHTML && this.gameField[5].innerHTML != this.gameField[7].innerHTML)
-            && (this.gameField[6].innerHTML != this.gameField[7].innerHTML))
+         (+this.gameField[4].children[0].getAttribute('data_value') + +this.gameField[5].children[0].getAttribute('data_value') + +this.gameField[6].children[0].getAttribute('data_value') + +this.gameField[7].children[0].getAttribute('data_value') == 10)
          &&
-         ((this.gameField[8].innerHTML != this.gameField[9].innerHTML && this.gameField[8].innerHTML != this.gameField[10].innerHTML && this.gameField[8].innerHTML != this.gameField[11].innerHTML)
-            && (this.gameField[9].innerHTML != this.gameField[10].innerHTML && this.gameField[9].innerHTML != this.gameField[11].innerHTML)
-            && (this.gameField[10].innerHTML != this.gameField[11].innerHTML))
+         (+this.gameField[8].children[0].getAttribute('data_value') + +this.gameField[9].children[0].getAttribute('data_value') + +this.gameField[10].children[0].getAttribute('data_value') + +this.gameField[11].children[0].getAttribute('data_value') == 10)
          &&
-         ((this.gameField[12].innerHTML != this.gameField[13].innerHTML && this.gameField[12].innerHTML != this.gameField[14].innerHTML && this.gameField[12].innerHTML != this.gameField[15].innerHTML)
-            && (this.gameField[13].innerHTML != this.gameField[14].innerHTML && this.gameField[13].innerHTML != this.gameField[15].innerHTML)
-            && (this.gameField[14].innerHTML != this.gameField[15].innerHTML))
+         (+this.gameField[12].children[0].getAttribute('data_value') + +this.gameField[13].children[0].getAttribute('data_value') + +this.gameField[14].children[0].getAttribute('data_value') + +this.gameField[15].children[0].getAttribute('data_value') == 10)
          &&
-         ((this.gameField[0].innerHTML != this.gameField[4].innerHTML && this.gameField[0].innerHTML != this.gameField[8].innerHTML && this.gameField[0].innerHTML != this.gameField[12].innerHTML)
-            && (this.gameField[4].innerHTML != this.gameField[8].innerHTML && this.gameField[4].innerHTML != this.gameField[12].innerHTML)
-            && (this.gameField[8].innerHTML != this.gameField[12].innerHTML))
+         (+this.gameField[0].children[0].getAttribute('data_value') + +this.gameField[4].children[0].getAttribute('data_value') + +this.gameField[8].children[0].getAttribute('data_value') + +this.gameField[12].children[0].getAttribute('data_value') == 10)
          &&
-         ((this.gameField[1].innerHTML != this.gameField[5].innerHTML && this.gameField[1].innerHTML != this.gameField[9].innerHTML && this.gameField[1].innerHTML != this.gameField[13].innerHTML)
-            && (this.gameField[5].innerHTML != this.gameField[9].innerHTML && this.gameField[5].innerHTML != this.gameField[13].innerHTML)
-            && (this.gameField[9].innerHTML != this.gameField[13].innerHTML))
+         (+this.gameField[1].children[0].getAttribute('data_value') + +this.gameField[5].children[0].getAttribute('data_value') + +this.gameField[9].children[0].getAttribute('data_value') + +this.gameField[13].children[0].getAttribute('data_value') == 10)
          &&
-         ((this.gameField[2].innerHTML != this.gameField[6].innerHTML && this.gameField[2].innerHTML != this.gameField[10].innerHTML && this.gameField[2].innerHTML != this.gameField[14].innerHTML)
-            && (this.gameField[6].innerHTML != this.gameField[10].innerHTML && this.gameField[6].innerHTML != this.gameField[14].innerHTML)
-            && (this.gameField[10].innerHTML != this.gameField[14].innerHTML))
+         (+this.gameField[2].children[0].getAttribute('data_value') + +this.gameField[6].children[0].getAttribute('data_value') + +this.gameField[10].children[0].getAttribute('data_value') + +this.gameField[14].children[0].getAttribute('data_value') == 10)
          &&
-         ((this.gameField[3].innerHTML != this.gameField[7].innerHTML && this.gameField[3].innerHTML != this.gameField[11].innerHTML && this.gameField[3].innerHTML != this.gameField[15].innerHTML)
-            && (this.gameField[7].innerHTML != this.gameField[11].innerHTML && this.gameField[7].innerHTML != this.gameField[15].innerHTML)
-            && (this.gameField[11].innerHTML != this.gameField[15].innerHTML))
+         (+this.gameField[3].children[0].getAttribute('data_value') + +this.gameField[7].children[0].getAttribute('data_value') + +this.gameField[11].children[0].getAttribute('data_value') + +this.gameField[15].children[0].getAttribute('data_value') == 10)
       ) {
          alert('Поздравляю!!! Ты выиграл');
          let choise = confirm('Хочешь перейти на слеующий уровень?');
@@ -133,14 +117,20 @@ class Sudoku {
             this.gamesData.forEach(item => {
                if (item.level == 'second') {
                   this.createStyle(item.images, item.backgroundImage, item.icons);
-                  // this.randomStart(item.icons);
+                  this.randomStart(item.icons);
                }
             })
          } else {
             alert('Игра закончена!');
          }
       } else {
-         alert('Ты проиграл')
+         alert('Ты проиграл');
+         this.gamesData.forEach(item => {
+            if (item.level == 'first') {
+               this.createStyle(item.images, item.backgroundImage, item.icons);
+               this.randomStart(item.icons);
+            }
+         })
       }
    }
 
@@ -149,7 +139,6 @@ class Sudoku {
       this.getConditionsGame();
       this.dragStart();
       this.gameDrags();
-
    }
 }
 
