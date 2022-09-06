@@ -32,6 +32,7 @@ class Sudoku {
    createStyle(img, bgi, icon) {
       this.gameField.forEach((item) => item.classList.remove('active'));
       this.gameImages.forEach((item) => item.setAttribute('src', img));
+      this.gameImages.forEach((item) => item.setAttribute('draggable', 'false'));
       this.gameField.forEach((item) => item.innerHTML = this.gameImages[0].outerHTML);
       this.iconImages.forEach((item, index) => {
          item.setAttribute('src', icon[index]);
@@ -64,13 +65,23 @@ class Sudoku {
    }
 
    dragDrop(event) {
-      if (!this.matches('.active')) {
-         let card = event.dataTransfer.getData('img');
-         this.innerHTML = card;
-         this.classList.add('active');
-         this.firstElementChild.classList.add('game__cell__img');
-         this.firstElementChild.classList.remove('icon__img');
-      }
+      let card = event.dataTransfer.getData('img');
+      this.innerHTML = card;
+      this.classList.add('active');
+      this.firstElementChild.classList.add('game__cell__img');
+      this.firstElementChild.classList.remove('icon__img');
+      this.firstElementChild.setAttribute('draggable', 'false');
+
+      // Для того что-бы запретить менять уже установленные картинки, нужно расскоментировать код ниже, а выше закоментировать
+
+      // if (!this.matches('.active')) {
+      //    let card = event.dataTransfer.getData('img');
+      //    this.innerHTML = card;
+      //    this.classList.add('active');
+      //    this.firstElementChild.classList.add('game__cell__img');
+      //    this.firstElementChild.classList.remove('icon__img');
+      //    this.firstElementChild.setAttribute('draggable', 'false');
+      // }
    }
 
    gameDrags() {
