@@ -49,6 +49,7 @@ class Sudoku {
          this.gameImages[randomNumber].setAttribute('data_value', i + 1);
          this.gameField[randomNumber].innerHTML = this.gameImages[randomNumber].outerHTML;
          this.gameField[randomNumber].classList.add('active');
+         this.gameField[randomNumber].classList.add('block'); // запрет на изменение данной карточки
       }
    }
 
@@ -65,12 +66,22 @@ class Sudoku {
    }
 
    dragDrop(event) {
-      let card = event.dataTransfer.getData('img');
-      this.innerHTML = card;
-      this.classList.add('active');
-      this.firstElementChild.classList.add('game__cell__img');
-      this.firstElementChild.classList.remove('icon__img');
-      this.firstElementChild.setAttribute('draggable', 'false');
+      // Для запрета замены первоначально установленных рандомным способом карточек, для отмены этого правила, нужно оставить код ниже, а этот убрать
+      if (!this.matches('.block')) {
+         let card = event.dataTransfer.getData('img');
+         this.innerHTML = card;
+         this.classList.add('active');
+         this.firstElementChild.classList.add('game__cell__img');
+         this.firstElementChild.classList.remove('icon__img');
+         this.firstElementChild.setAttribute('draggable', 'false');
+      }
+
+      // let card = event.dataTransfer.getData('img');
+      // this.innerHTML = card;
+      // this.classList.add('active');
+      // this.firstElementChild.classList.add('game__cell__img');
+      // this.firstElementChild.classList.remove('icon__img');
+      // this.firstElementChild.setAttribute('draggable', 'false');
 
       // Для того что-бы запретить менять уже установленные картинки, нужно расскоментировать код ниже, а выше закоментировать
 
